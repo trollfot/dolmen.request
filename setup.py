@@ -15,6 +15,7 @@ long_description = read('README.txt') + '\n' + read('HISTORY.txt')
 
 install_requires = [
     'cromlech.browser >= 0.4',
+    'cromlech.dawnlight',
     'cromlech.io >= 0.2a1',
     'grokcore.component >= 2.1',
     'martian >= 0.13',
@@ -23,6 +24,7 @@ install_requires = [
     ]
 
 tests_require = [
+    'cromlech.browser [test]'
     ]
 
 setup(
