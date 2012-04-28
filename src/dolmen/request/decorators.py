@@ -1,15 +1,15 @@
-from cromlech.io.interfaces import IRequestType
+from cromlech.browser.interfaces import ITypedHTTPRequest
 from dolmen.request import register_request_type
 from dolmen.request.interfaces import ISkin
 from zope.interface.interfaces import IInterface
 
 
 def request_type(name):
-    """Class decorator to register an IRequestType under name
+    """Class decorator to register an ITypedHTTPRequest under name
     """
     def decorate(iface):
         assert IInterface.providedBy(iface)
-        assert iface.isOrExtends(IRequestType)
+        assert iface.isOrExtends(ITypedHTTPRequest)
         register_request_type(iface, name)
         return iface
 

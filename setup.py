@@ -5,13 +5,17 @@ from setuptools import setup, find_packages
 
 
 def read(*rnames):
-    return open(
-        os.path.join(
-            os.path.join(os.path.dirname(__file__), 'docs'),
-            *rnames)).read()
+    return open(os.path.join(os.path.dirname(__file__),'docs',*rnames)).read()
+ 
+def test_read(*rnames):
+    return open(os.path.join(os.path.dirname(__file__), 
+                'src', 'dolmen', 'request' ,*rnames)).read()
 
-version = '0.1a'
-long_description = read('README.txt') + '\n' + read('HISTORY.txt')
+version = '0.1'
+long_description = (read('README.txt') + '\n' +
+                    '.. contents::\n\n' + 
+                    read('HISTORY.txt') + '\n' +
+                    test_read('test_overview.txt'))
 
 install_requires = [
     'cromlech.browser >= 0.4',

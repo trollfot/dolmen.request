@@ -1,9 +1,9 @@
-from cromlech.io.interfaces import IRequestType
+from cromlech.browser.interfaces import ITypedHTTPRequest
 from zope.component.interfaces import IObjectEvent, ObjectEvent
 from zope.interface import implements
 
 
-class ISkin(IRequestType):
+class ISkin(ITypedHTTPRequest):
     """Base interface for marker interfaces that define a skin
 
     by skin we mean different CSS or html layout...

@@ -1,3 +1,6 @@
+Usage Overview
+###############
+
 Let's import some stuff::
 
   >>> from cromlech.browser.interfaces import IView
@@ -16,7 +19,7 @@ We set up cromlech.dawnlight and our package::
   >>> grok.testing.grok("cromlech.dawnlight")
   >>> grok.testing.grok("dolmen.request")
 
-We have an application with an index page[#]
+We have an application with an index page [#]_
 
 ::
 
@@ -36,18 +39,16 @@ We have an application with an index page[#]
   >>> provideAdapter(
   ...     IndexView, (IDawnlightApplication, IRequest), IView, name='index')
 
-.. [#]: Note that we use provideAdapter instead of context / name directives
-for sake of simplicity (no need of grokking).
 
 Dolmen.request helps you have different version of your site based on
 the request type. You can declare a request type and register it under
 a name with request_type::
 
-  >>> from cromlech.io.interfaces import IRequestType
+  >>> from cromlech.browser.interfaces import ITypedHTTPRequest
   >>> from dolmen.request.decorators import request_type
   
   >>> @request_type('json')
-  ... class IJSONRequest(IRequestType):
+  ... class IJSONRequest(ITypedHTTPRequest):
   ...     """REST/JSON request"""
 
 You may equally use the skin directive, for semantic purpose,
@@ -118,3 +119,7 @@ Now if we use our skin (or not)::
   >>> app.test_serve("/++request_type++corporate/")
   Alert customer in !
   'Welcome'
+
+
+.. [#] Note that we use provideAdapter instead of context / name directives
+       for sake of simplicity (no need of grokking).

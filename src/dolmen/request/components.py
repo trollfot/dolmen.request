@@ -1,6 +1,6 @@
 import grokcore.component as grok
 
-from dolmen.request.interfaces import IRequestType, RequestTypedEvent
+from dolmen.request.interfaces import ITypedHTTPRequest, RequestTypedEvent
 from cromlech.io import IRequest
 from cromlech.browser.exceptions import HTTPPreconditionFailed
 from cromlech.browser import ITraverser
@@ -19,7 +19,7 @@ class RequestTypeTraverser(grok.MultiAdapter):
         self.request = request
 
     def traverse(self, ns, name):
-        request_type = queryUtility(IRequestType, name=name)
+        request_type = queryUtility(ITypedHTTPRequest, name=name)
         if request_type is not None:
             alsoProvides(self.request, request_type)
             notify(RequestTypedEvent(self.request))
