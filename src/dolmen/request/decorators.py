@@ -1,14 +1,7 @@
 from cromlech.io.interfaces import IRequestType
+from dolmen.request import register_request_type
 from dolmen.request.interfaces import ISkin
-from cromlech.browser.interfaces import IHTTPException
-from zope.component import provideUtility
 from zope.interface.interfaces import IInterface
-
-
-def register_request_type(iface, name, provides=IRequestType):
-    """Declare that interface iface as name
-    """
-    provideUtility(iface, provides=provides, name=name)
 
 
 def request_type(name):
@@ -18,6 +11,7 @@ def request_type(name):
         assert IInterface.providedBy(iface)
         assert iface.isOrExtends(IRequestType)
         register_request_type(iface, name)
+        return iface
 
     return decorate
 
@@ -29,5 +23,6 @@ def skin(name):
         assert IInterface.providedBy(iface)
         assert iface.isOrExtends(ISkin)
         register_request_type(iface, name, provides=ISkin)
+        return iface
 
     return decorate

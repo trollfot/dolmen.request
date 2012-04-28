@@ -1,4 +1,3 @@
-
 Let's import some stuff::
 
   >>> from cromlech.browser.interfaces import IView
@@ -7,13 +6,13 @@ Let's import some stuff::
   >>> from cromlech.io import IRequest
   >>> import grokcore.component as grok
   >>> from grokcore.component import subscribe
-  >>> from zope.interface import implements
-  >>> from zope.component import provideAdapter
+  >>> from zope.interface import implements, Interface
+  >>> from zope.component import provideAdapter, provideHandler
+  >>> from zope.component import eventtesting
 
 We set up cromlech.dawnlight and our package::
 
-  >>> from grokcore.component.testing import grok_component
-
+  >>> eventtesting.setUp()
   >>> grok.testing.grok("cromlech.dawnlight")
   >>> grok.testing.grok("dolmen.request")
 
@@ -45,8 +44,8 @@ the request type. You can declare a request type and register it under
 a name with request_type::
 
   >>> from cromlech.io.interfaces import IRequestType
-  >>> from dolmen.request.directives import request_type
-
+  >>> from dolmen.request.decorators import request_type
+  
   >>> @request_type('json')
   ... class IJSONRequest(IRequestType):
   ...     """REST/JSON request"""
@@ -55,7 +54,7 @@ You may equally use the skin directive, for semantic purpose,
 if the request type is there to change site skin ::
 
   >>> from dolmen.request.interfaces import ISkin
-  >>> from dolmen.request.directives import skin
+  >>> from dolmen.request.decorators import skin
   >>> @skin('corporate')
   ... class ICorporateSkin(ISkin):
   ...     """Corporate skin"""
@@ -69,7 +68,7 @@ For example let's add the json index::
 
   >>> class JSONView(TestView):
   ...    def render(self, *args,  **kwargs):
-  ...        return {'msg':'Greatings'}
+  ...        return "{'msg':'Greatings'}"
   >>> provideAdapter(
   ...     JSONView, (IDawnlightApplication, IJSONRequest), IView, 'index')
 
@@ -93,7 +92,7 @@ typing the request. So the application works normally::
 But passing through the tarverser you can get a different version::
 
   >>> app.test_serve("/++request_type++json/")
-  {'msg':'Greatings'}
+  "{'msg':'Greatings'}"
 
   >>> app.test_serve("/++request_type++corporate/")
   'Welcome'
@@ -104,10 +103,12 @@ or what your application may need.
 
 For example, let's log the corporate access::
 
-  >>> from cromlech.browser.interfaces import IRequestTypedEvent
-  >>> @subscribe(ICorporateSkin, IRequestTypedEvent)
-  ... def alert_on_customer_access(req, event):
+  >>> from dolmen.request.interfaces import IRequestTypedEvent
+  >>> def alert_on_customer_access(req, event):
   ...     print "Alert customer in !"
+  >>> provideHandler(
+  ...     alert_on_customer_access, (ICorporateSkin, IRequestTypedEvent))
+
 
 Now if we use our skin (or not)::
 

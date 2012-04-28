@@ -9,7 +9,7 @@ from zope.event import notify
 from zope.interface import alsoProvides, Interface
 
 
-class RequestTyperTraverser(grok.MultiAdapter):
+class RequestTypeTraverser(grok.MultiAdapter):
     grok.provides(ITraverser)
     grok.name('request_type')
     grok.adapts(Interface, IRequest)

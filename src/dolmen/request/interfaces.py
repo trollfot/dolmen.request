@@ -17,6 +17,6 @@ class IRequestTypedEvent(IObjectEvent):
 
 
 class RequestTypedEvent(ObjectEvent):
-    """IRequestTypedEvent implemetation
+    """IRequestTypedEvent implementation
     """
     implements(IRequestTypedEvent)
