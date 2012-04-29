@@ -1,8 +1,13 @@
 Changes
 =======
 
+0.2 (2012-04-29)
+----------------
 
-0.1a1 (unreleased)
-------------------
+- Added a `configure.zcml` to grok the traverser component.
+
+
+0.1 (2012-04-28)
+----------------
 
 - initial release
