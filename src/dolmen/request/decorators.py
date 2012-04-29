@@ -9,6 +9,7 @@ from zope.interface.interfaces import IInterface
 def request_type(name):
     """Class decorator to register an ITypedHTTPRequest under name
     """
+
     def decorate(iface):
         assert IInterface.providedBy(iface)
         assert iface.isOrExtends(ITypedHTTPRequest)
@@ -21,6 +22,7 @@ def request_type(name):
 def skin(name):
     """Class decorator to register an ISkin under name
     """
+
     def decorate(iface):
         assert IInterface.providedBy(iface)
         assert iface.isOrExtends(ISkin)

@@ -9,6 +9,7 @@ from zope.interface.interfaces import IInterface
 
 
 def test_decorators():
+
     @request_type('spam')
     class ISpamRequest(ITypedHTTPRequest):
         pass
@@ -30,9 +31,7 @@ def test_decorators():
     assert getUtility(ITypedHTTPRequest, name='other') == ISpamRequest
     register_request_type(IFooSkin, 'other')
     assert getUtility(ITypedHTTPRequest, name='other') == IFooSkin
-    
+
 
 def test_interfaces():
     assert ISkin.isOrExtends(ITypedHTTPRequest)
-
-
