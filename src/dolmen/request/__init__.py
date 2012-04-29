@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from dolmen.request.interfaces import ITypedHTTPRequest
 from zope.component import provideUtility
 

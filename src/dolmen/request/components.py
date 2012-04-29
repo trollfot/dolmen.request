@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
+
 import grokcore.component as grok
 
-from dolmen.request.interfaces import ITypedHTTPRequest, RequestTypedEvent
-from cromlech.io import IRequest
-from cromlech.browser.exceptions import HTTPPreconditionFailed
 from cromlech.browser import ITraverser
+from cromlech.io import IRequest
+from dolmen.request.interfaces import ITypedHTTPRequest, RequestTypedEvent
 from zope.component import queryUtility
 from zope.event import notify
 from zope.interface import alsoProvides, Interface

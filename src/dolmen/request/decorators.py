@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from cromlech.browser.interfaces import ITypedHTTPRequest
 from dolmen.request import register_request_type
 from dolmen.request.interfaces import ISkin
