@@ -11,18 +11,17 @@ def test_read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), 
                 'src', 'dolmen', 'request' ,*rnames)).read()
 
-version = '0.2'
+version = '0.3'
 long_description = (read('README.txt') + '\n' +
                     '.. contents::\n\n' + 
                     read('HISTORY.txt') + '\n' +
                     test_read('test_overview.txt'))
 
 install_requires = [
-    'cromlech.browser >= 0.4.4',
-    'cromlech.dawnlight',
-    'cromlech.io >= 0.2',
+    'cromlech.browser >= 0.5',
+    'cromlech.dawnlight >= 0.6',
     'grokcore.component >= 2.1',
-    'martian >= 0.13',
+    'martian >= 0.14',
     'setuptools',
     'zope.component',
     ]

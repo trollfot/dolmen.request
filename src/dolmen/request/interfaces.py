@@ -1,9 +1,11 @@
-from cromlech.browser.interfaces import ITypedHTTPRequest
+# -*- coding: utf-8 -*-
+
+from cromlech.browser.interfaces import ITypedRequest
 from zope.component.interfaces import IObjectEvent, ObjectEvent
 from zope.interface import implements
 
 
-class ISkin(ITypedHTTPRequest):
+class ISkin(ITypedRequest):
     """Base interface for marker interfaces that define a skin
 
     by skin we mean different CSS or html layout...

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from cromlech.browser.interfaces import ITypedHTTPRequest
+from cromlech.browser.interfaces import ITypedRequest
 from dolmen.request import register_request_type
 from dolmen.request.interfaces import ISkin
 from zope.interface.interfaces import IInterface
@@ -12,7 +12,7 @@ def request_type(name):
 
     def decorate(iface):
         assert IInterface.providedBy(iface)
-        assert iface.isOrExtends(ITypedHTTPRequest)
+        assert iface.isOrExtends(ITypedRequest)
         register_request_type(iface, name)
         return iface
 

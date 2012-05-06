@@ -3,10 +3,9 @@ Usage Overview
 
 Let's import some stuff::
 
-  >>> from cromlech.browser.interfaces import IView
-  >>> from cromlech.browser.testing import TestHTTPRequest, TestView
-  >>> from cromlech.dawnlight import IDawnlightApplication, DawnlightPublisher
-  >>> from cromlech.io import IRequest
+  >>> from cromlech.browser import IRequest, IView
+  >>> from cromlech.browser.testing import TestRequest, TestView
+  >>> from cromlech.dawnlight import DawnlightPublisher
   >>> import grokcore.component as grok
   >>> from grokcore.component import subscribe
   >>> from zope.interface import implements, Interface
@@ -24,41 +23,46 @@ We have an application with an index page [#]_
 ::
 
   >>> class Application(object):
-  ...     implements(IDawnlightApplication)
   ...
   ...     def test_serve(self, uri):
-  ...           req = TestHTTPRequest(path=uri)
-  ...           publisher = DawnlightPublisher(req, app)
-  ...           resp = publisher.publish(app)
+  ...           req = TestRequest(path=uri)
+  ...           publisher = DawnlightPublisher()
+  ...           resp = publisher.publish(req, app)
   ...           assert resp.status_int == 200
   ...           return resp.body
+
 
   >>> class IndexView(TestView):
   ...    def render(self, *args, **kwargs):
   ...        return "Hi mate !"
+
+
   >>> provideAdapter(
-  ...     IndexView, (IDawnlightApplication, IRequest), IView, name='index')
+  ...     IndexView, (Application, IRequest), IView, name='index')
 
 
 Dolmen.request helps you have different version of your site based on
 the request type. You can declare a request type and register it under
 a name with request_type::
 
-  >>> from cromlech.browser.interfaces import ITypedHTTPRequest
+  >>> from cromlech.browser.interfaces import ITypedRequest
   >>> from dolmen.request.decorators import request_type
   
   >>> @request_type('json')
-  ... class IJSONRequest(ITypedHTTPRequest):
+  ... class IJSONRequest(ITypedRequest):
   ...     """REST/JSON request"""
+
 
 You may equally use the skin directive, for semantic purpose,
 if the request type is there to change site skin ::
 
   >>> from dolmen.request.interfaces import ISkin
   >>> from dolmen.request.decorators import skin
+
   >>> @skin('corporate')
   ... class ICorporateSkin(ISkin):
   ...     """Corporate skin"""
+
 
 Thanks to that,
 you can override default behaviour
@@ -70,16 +74,18 @@ For example let's add the json index::
   >>> class JSONView(TestView):
   ...    def render(self, *args,  **kwargs):
   ...        return "{'msg':'Greatings'}"
+
   >>> provideAdapter(
-  ...     JSONView, (IDawnlightApplication, IJSONRequest), IView, 'index')
+  ...     JSONView, (Application, IJSONRequest), IView, 'index')
 
 And an index for the corporate version of our site ::
 
   >>> class CorporateView(TestView):
   ...    def render(self, *args,  **kwargs):
   ...        return "Welcome"
+
   >>> provideAdapter(
-  ...     CorporateView, (IDawnlightApplication, ICorporateSkin),
+  ...     CorporateView, (Application, ICorporateSkin),
   ...     IView, 'index')
 
 Dolmen.request provides a request_type traverser, as a simple way of
